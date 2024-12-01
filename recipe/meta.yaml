@@ -6,22 +6,22 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 277e5efebefb69a31cfac5fb1464d57c401893326d4518811b7cfefda30dc0c9
 
 build:
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   noarch: python
-  number: 0
+  number: 1
 
 requirements:
   host:
-    - python >=3.9
+    - python {{ python_min }}
     - pip
     - poetry-core >=1.0.0
     - poetry-dynamic-versioning
   run:
-    - python >=3.9
+    - python >={{ python_min }}
     - numpy
     - xarray
 
@@ -30,6 +30,7 @@ test:
     - xarray_selafin
   requires:
     - pip
+    - python {{ python_min }}
   commands:
     - pip check
 
